@@ -11,23 +11,27 @@ import SceneKit
 import ARKit
 
 class ViewController: UIViewController, ARSCNViewDelegate {
-
+    
     @IBOutlet var sceneView: ARSCNView!
+    
+    // we make sun an optional as an empty scene should not contain one
+    var sun: Sun?
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // place features points on the detected surface
+        self.sceneView.debugOptions = [ARSCNDebugOptions.showFeaturePoints]
         
         // Set the view's delegate
         sceneView.delegate = self
         
         // Show statistics such as fps and timing information
+        // at the bottom of the screen
         sceneView.showsStatistics = true
         
-        // Create a new scene
-        let scene = SCNScene(named: "art.scnassets/ship.scn")!
-        
-        // Set the scene to the view
-        sceneView.scene = scene
+        // automatically add lighting to the scene
+        sceneView.autoenablesDefaultLighting = true
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -35,7 +39,8 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         
         // Create a session configuration
         let configuration = ARWorldTrackingConfiguration()
-
+        configuration.planeDetection = .vertical
+        
         // Run the view's session
         sceneView.session.run(configuration)
     }
@@ -46,30 +51,42 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         // Pause the view's session
         sceneView.session.pause()
     }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        if let touch = touches.first {
+            // NOTE: this is a 2D location on the screen -- we will need to convert it to 3D
+            let touchLocation = touch.location(in: sceneView)
+            // find 3D location int the the real world -- not the AR scene
+            let results = sceneView.hitTest(touchLocation, types: .existingPlaneUsingExtent)
+            
+            // we will pick the first results and unwrap it
+            if let hitResult = results.first {
+                if let node = sun {
+                    // if the sun is spinning, stop it
+                    // otherwise start spinning it
+                    node.spinning ? node.stop() : node.spin()
+                } else {
+                    // create new sun
+                    sun = Sun(radius: 0.1)
+                    // ADD the sun to the scene
+                    place(sun: sun!, location: hitResult)
+                }
+            }
+        }
+    }
 
-    // MARK: - ARSCNViewDelegate
-    
-/*
-    // Override to create and configure nodes for anchors added to the view's session.
-    func renderer(_ renderer: SCNSceneRenderer, nodeFor anchor: ARAnchor) -> SCNNode? {
-        let node = SCNNode()
-     
-        return node
-    }
-*/
-    
-    func session(_ session: ARSession, didFailWithError error: Error) {
-        // Present an error message to the user
+    func place(sun node: Sun, location: ARHitTestResult) {
+        // if we dont add sun.boundingSphere.radius to z coordinate
+        // we will get the sun's other half hidden underneath the scene plane
+        // whilst we want it ALL on top of the scene plane
+        // we essentially move the sun anchor UP i.e. along the z axis
+        node.position = SCNVector3(
+            x: location.worldTransform.columns.3.x,
+            y: location.worldTransform.columns.3.y,
+            z: location.worldTransform.columns.3.z
+        )
         
-    }
-    
-    func sessionWasInterrupted(_ session: ARSession) {
-        // Inform the user that the session has been interrupted, for example, by presenting an overlay
-        
-    }
-    
-    func sessionInterruptionEnded(_ session: ARSession) {
-        // Reset tracking and/or remove existing anchors if consistent tracking is required
-        
+        // ad the node to the scene
+        sceneView.scene.rootNode.addChildNode(node)
     }
 }

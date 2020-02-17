@@ -13,6 +13,7 @@
 		C9215F7223FAEB88000DB94B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C9215F7023FAEB88000DB94B /* Main.storyboard */; };
 		C9215F7423FAEB8A000DB94B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C9215F7323FAEB8A000DB94B /* Assets.xcassets */; };
 		C9215F7723FAEB8A000DB94B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C9215F7523FAEB8A000DB94B /* LaunchScreen.storyboard */; };
+		C9215F7F23FB2441000DB94B /* Sun.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9215F7E23FB2441000DB94B /* Sun.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +25,7 @@
 		C9215F7323FAEB8A000DB94B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C9215F7623FAEB8A000DB94B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		C9215F7823FAEB8A000DB94B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C9215F7E23FB2441000DB94B /* Sun.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sun.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,9 +59,10 @@
 			isa = PBXGroup;
 			children = (
 				C9215F6A23FAEB88000DB94B /* AppDelegate.swift */,
-				C9215F6C23FAEB88000DB94B /* art.scnassets */,
 				C9215F6E23FAEB88000DB94B /* ViewController.swift */,
+				C9215F7E23FB2441000DB94B /* Sun.swift */,
 				C9215F7023FAEB88000DB94B /* Main.storyboard */,
+				C9215F6C23FAEB88000DB94B /* art.scnassets */,
 				C9215F7323FAEB8A000DB94B /* Assets.xcassets */,
 				C9215F7523FAEB8A000DB94B /* LaunchScreen.storyboard */,
 				C9215F7823FAEB8A000DB94B /* Info.plist */,
@@ -141,6 +144,7 @@
 			files = (
 				C9215F6F23FAEB88000DB94B /* ViewController.swift in Sources */,
 				C9215F6B23FAEB88000DB94B /* AppDelegate.swift in Sources */,
+				C9215F7F23FB2441000DB94B /* Sun.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
