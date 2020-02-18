@@ -89,4 +89,11 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         // ad the node to the scene
         sceneView.scene.rootNode.addChildNode(node)
     }
+
+    @IBAction func removeSunTapped(_ sender: UIBarButtonItem) {
+        // remove the sun from the scene when tapping the trash button
+        sun?.removeFromParentNode()
+        // mark the sun node as nil
+        sun = nil
+    }
 }
